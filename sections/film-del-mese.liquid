@@ -1,0 +1,68 @@
+<div style="padding: 60px 20px; text-align: center; background: {{ section.settings.sfondo }};">
+  <h2>{{ section.settings.titolo }}</h2>
+  <p>{{ section.settings.descrizione }}</p>
+
+  {% if section.settings.mostra_data %}
+    <small>Aggiornato il {{ 'now' | date: '%d/%m/%Y' }}</small>
+  {% endif %}
+
+  {% if section.settings.collezione != blank %}
+    <ul style="list-style: none; padding: 0;">
+      {% for product in section.settings.collezione.products limit: section.settings.numero_prodotti %}
+        <li>
+          {{ product.title | upcase }} – {{ product.price | money }}
+          {% if product.available == false %} – Esaurito{% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Film del mese",
+  "settings": [
+    {
+      "type": "text",
+      "id": "titolo",
+      "label": "Titolo",
+      "default": "Il film del mese"
+    },
+    {
+      "type": "textarea",
+      "id": "descrizione",
+      "label": "Descrizione",
+      "default": "Ogni mese un film consigliato dalla redazione."
+    },
+    {
+      "type": "color",
+      "id": "sfondo",
+      "label": "Colore di sfondo",
+      "default": "#f4f1ea"
+    },
+    {
+      "type": "checkbox",
+      "id": "mostra_data",
+      "label": "Mostra la data",
+      "default": true
+    },
+    {
+      "type": "collection",
+      "id": "collezione",
+      "label": "Collezione da mostrare"
+    },
+    {
+      "type": "range",
+      "id": "numero_prodotti",
+      "label": "Numero di prodotti",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "presets": [
+    { "name": "Film del mese" }
+  ]
+}
+{% endschema %}
