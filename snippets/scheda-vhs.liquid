@@ -1,0 +1,8 @@
+<div>
+  <strong>{{ product.title | upcase }}</strong> – {{ product.price | money }}
+  {% if product.available == false %} – Esaurito{% endif %}
+
+  {% if product.metafields.custom.regista != blank %}
+    <br><small>Regia: {{ product.metafields.custom.regista }} ({{ product.metafields.custom.anno }})</small>
+  {% endif %}
+</div>
